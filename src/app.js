@@ -2,14 +2,25 @@ const express = require('express');
 const cors = require('cors');
 const pool = require('./config/db');
 const masterRouter = require('./routes/index');
+const errorHandler = require('./middlewares/error-middleware');
+const requestLogger = require('./middlewares/request-logger');
+const { generalLimiter, authLimiter, uploadLimiter } = require('./middlewares/rate-limiter');
 
 const app = express();
 
+// Middleware
+app.use(requestLogger);
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static('uploads'));
 
-// Inject the pool into the master router
+// Rate limiting
+app.use('/api', generalLimiter);
+app.use('/api/auth', authLimiter);
+app.use('/api/posts/create-post', uploadLimiter);
+
+// API routes
 app.use('/api', masterRouter(pool));
 
 // Temporary test endpoint without database
@@ -29,5 +40,8 @@ app.post('/api/test-login', (req, res) => {
     res.status(400).json({ success: false, error: 'Email and password required' });
   }
 });
+
+// Error handling middleware (must be last)
+app.use(errorHandler);
 
 module.exports = app;
