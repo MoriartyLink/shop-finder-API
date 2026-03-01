@@ -1,7 +1,7 @@
-# LBDP Backend Documentation
+# Shop Finder API 
 
 ## Overview
-Location-based business directory platform backend with Node.js and PostgreSQL.
+This API is for Location-based business directory platform ,backend with Node.js and PostgreSQL.
 
 ## Quick Start
 

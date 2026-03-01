@@ -1,4 +1,4 @@
-# Contributing to LBDP
+# Contributing to Shop Finder API
 
 ## How to Contribute
 
@@ -226,4 +226,4 @@ By contributing, you agree that your contributions will be licensed under the sa
 - Ask in discussions for general questions
 - Contact maintainers for sensitive issues
 
-Thank you for contributing to LBDP! 🙏
+Thank you for contributing! 
